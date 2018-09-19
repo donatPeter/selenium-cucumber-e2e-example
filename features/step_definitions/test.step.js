@@ -17,4 +17,5 @@ When('I click on the HTML element with {string} ID', async (id) => {
 Then('it navigates to the {string} URL', async (url) => {
   const currURL = await driver.getCurrentUrl();
   expect(currURL).to.equal(url);
+  await driver.quit();
 });
