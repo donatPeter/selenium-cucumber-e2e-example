@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "cucumber": "^5.0.1",
-    "cucumber-steps": "github:donatPeter/cucumber-steps#master"
+    "cucumber-steps": "github:donatPeter/cucumber-steps#class_syntax"
   }
 }
