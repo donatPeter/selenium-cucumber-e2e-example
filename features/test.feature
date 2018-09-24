@@ -5,6 +5,7 @@ Feature: Test scenarios for demo porposes
     Given I open the "http://localhost:3000" URL
     Then The HTML element with "login-to-order" is disabled
 
+
   Scenario Outline: The "Login to Order" button is enabled after choosing at least on ingredient
     Given I open the "http://localhost:3000" URL
     When I click on the HTML element with the ID <buttonId>
@@ -15,11 +16,18 @@ Feature: Test scenarios for demo porposes
       | "salad-more" |
       | "bacon-more" |
 
+
   Scenario: The "Sign up" button is disabled on empty form
     Given I open the "http://localhost:3000" URL
     When I click on the HTML element with the ID "salad-more"
       And I click on the HTML element with the ID "login-to-order"
     Then The HTML element with "signin" is disabled
+
+
+  Scenario: The default button is the "Sign up" on opening the login page
+    Given I open the "http://localhost:3000" URL
+    When I click on the HTML element with the ID "login-id"
+    Then I should see "Sign up" in the "signin" element text
 
 
   Scenario: It navigates to the checkout form on login after a burger building
@@ -44,6 +52,17 @@ Feature: Test scenarios for demo porposes
     Then The "ordersummery-modal" element is visible
 
 
+  Scenario: The Order button is disabled on empty form
+    # Aka the user is logged in
+    Given I open the "http://localhost:3000" URL
+      And The "logout-id" element is visible
+    When I click on the HTML element with the ID "salad-more"
+      And I click on the HTML element with the ID "login-to-order"
+      And I click on the HTML element with the ID "continue-to-order"
+      And I click on the HTML element with the ID "continue-to-checkin"
+    Then The HTML element with "order" is disabled
+
+
   Scenario: The Order button is enabled after filling out the form
     # Aka the user is logged in
     Given I open the "http://localhost:3000" URL
@@ -58,4 +77,25 @@ Feature: Test scenarios for demo porposes
       | id=zipCode | 1111                  |
       | id=country | Hungary               |
       | id=email   | test@infullmobile.com |
+      And I select "cheapest" from "deliveryMethod"
     Then The HTML element with "order" is enabled
+
+
+  Scenario: The Order button is enabled after filling out the form
+    # Aka the user is logged in
+    Given I open the "http://localhost:3000" URL
+      And The "logout-id" element is visible
+    When I click on the HTML element with the ID "salad-more"
+      And I click on the HTML element with the ID "login-to-order"
+      And I click on the HTML element with the ID "continue-to-order"
+      And I click on the HTML element with the ID "continue-to-checkin"
+      And I fill in the following:
+      | id=name    | Test Name             |
+      | id=street  | Test Street           |
+      | id=zipCode | 1111                  |
+      | id=country | Hungary               |
+      | id=email   | test@infullmobile.com |
+      And I select "cheapest" from "deliveryMethod"
+      And I click on the HTML element with the ID "order"
+    Then I should be on "http://localhost:3000/"
+
